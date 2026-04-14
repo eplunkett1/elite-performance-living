@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+
+:root {
+  font-family: "Outfit", system-ui, -apple-system, sans-serif;
+  color: #e8e8f0;
+  background: #07070d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #07070d;
+  color: #e8e8f0;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #07070d;
+}
+
+.subpage-header {
+  margin-bottom: 16px;
+}
+
+.back-link {
+  display: inline-block;
+  color: #ff8f65;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: #ff6b35;
+}
+
+.page-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.page-subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 60ch;
+  line-height: 1.5;
+}
