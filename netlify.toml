@@ -1,13 +1,12 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
-# API must be matched before the SPA fallback
 [[redirects]]
-  from = "/api/anthropic"
-  to = "/.netlify/functions/anthropic-proxy"
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
   status = 200
-  force = true
 
 [[redirects]]
   from = "/*"

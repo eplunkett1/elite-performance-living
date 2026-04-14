@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
-        "/api/anthropic": {
+        "/.netlify/functions/anthropic-proxy": {
           target: "https://api.anthropic.com",
           changeOrigin: true,
           rewrite: () => "/v1/messages",

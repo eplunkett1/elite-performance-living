@@ -121,7 +121,7 @@ After the weekly plan, include:
 Format with clear headers using markdown. Make it motivating but professional. Be specific with exercise names - no vague descriptions. Include tempo recommendations where relevant for their experience level.`;
 
     try {
-      const response = await fetch("/api/anthropic", {
+      const response = await fetch("/.netlify/functions/anthropic-proxy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
