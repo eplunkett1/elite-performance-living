@@ -20,8 +20,14 @@ const PILLAR_RESOURCE_ROWS = [
     { kind: "book", title: "The One Thing", author: "Gary Keller" },
   ],
   [
+    {
+      kind: "toolCard",
+      label: "Elite Performance AI Workout Architect",
+      to: "/workout",
+      description: "Answer a few questions and get a personalized weekly training plan.",
+      icon: TOOL_ICON,
+    },
     { kind: "book", title: "Spark", author: "John Ratey" },
-    { kind: "tool", label: "Elite Performance AI Workout Architect", to: "/workout" },
   ],
   [
     { kind: "book", title: "The Code of the Extraordinary Mind", author: "Vishen Lakhiani" },
@@ -52,9 +58,15 @@ const PILLAR_RESOURCE_ROWS = [
     { kind: "book", title: "The Go-Giver", author: "Bob Burg and John David Mann" },
   ],
   [
+    {
+      kind: "toolCard",
+      label: "Stewardship Financial Assessment",
+      to: "/stewardship",
+      description: "Financial health score, debt strategy, and savings roadmap tailored to your numbers.",
+      icon: "\u{1F4B0}",
+    },
     { kind: "book", title: "Extreme Ownership", author: "Jocko Willink and Leif Babin" },
     { kind: "book", title: "Stewardship", author: "Peter Block" },
-    { kind: "tool", label: "Stewardship Financial Assessment", to: "/stewardship" },
   ],
   [
     { kind: "book", title: "The Magic of Thinking Big", author: "David J. Schwartz" },
@@ -110,17 +122,29 @@ function ResourceRow({ row, accent }) {
       </li>
     );
   }
-  if (row.kind === "tool") {
+  if (row.kind === "toolCard") {
     return (
-      <li className="res-item">
-        <span className="res-item-icon" aria-hidden>
-          {TOOL_ICON}
-        </span>
-        <span className="res-item-body">
-          <Link to={row.to} className="res-link" style={{ color: accent }}>
-            {row.label}
-          </Link>
-        </span>
+      <li className="res-tool-card-item">
+        <Link
+          to={row.to}
+          className="res-tool-card"
+          style={{ borderColor: `${accent}44` }}
+        >
+          <span className="res-tool-card-icon" aria-hidden>
+            {row.icon ?? TOOL_ICON}
+          </span>
+          <div className="res-tool-card-text">
+            <div className="res-tool-card-title" style={{ color: accent }}>
+              {row.label}
+            </div>
+            {row.description ? (
+              <p className="res-tool-card-desc">{row.description}</p>
+            ) : null}
+          </div>
+          <span className="res-tool-card-arrow" style={{ color: accent }} aria-hidden>
+            →
+          </span>
+        </Link>
       </li>
     );
   }
@@ -305,6 +329,50 @@ export default function ResourcesPage() {
           color: rgba(255, 255, 255, 0.62);
         }
         .res-item + .res-item { margin-top: 12px; }
+        .res-tool-card-item {
+          list-style: none;
+          margin: 0 0 14px 0;
+        }
+        .res-tool-card {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 14px 16px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          text-decoration: none;
+          color: inherit;
+          transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .res-tool-card:hover {
+          background: rgba(255, 255, 255, 0.07);
+          transform: translateY(-1px);
+        }
+        .res-tool-card-icon {
+          font-size: 22px;
+          line-height: 1;
+          flex-shrink: 0;
+        }
+        .res-tool-card-text { min-width: 0; flex: 1; }
+        .res-tool-card-title {
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 1.25;
+        }
+        .res-tool-card-desc {
+          margin: 6px 0 0;
+          font-size: 13px;
+          line-height: 1.45;
+          color: rgba(255, 255, 255, 0.48);
+          font-weight: 500;
+        }
+        .res-tool-card-arrow {
+          flex-shrink: 0;
+          font-size: 18px;
+          font-weight: 700;
+          opacity: 0.85;
+        }
         .res-item-icon {
           flex-shrink: 0;
           width: 24px;

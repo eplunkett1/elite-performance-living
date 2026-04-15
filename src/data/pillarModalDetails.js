@@ -3,6 +3,7 @@
 const BOOK = "\u{1F4D6}";
 const LIFT = "\u{1F3CB}\uFE0F";
 const GLOBE = "\u{1F310}";
+const MONEY = "\u{1F4B0}";
 
 export const PILLAR_MODAL_DETAILS = [
   {
@@ -204,6 +205,15 @@ export const PILLAR_MODAL_DETAILS = [
     resources: [
       { kind: "book", icon: BOOK, title: "Extreme Ownership", author: "Jocko Willink and Leif Babin", note: "" },
       { kind: "book", icon: BOOK, title: "Stewardship", author: "Peter Block", note: "Choosing service over self-interest" },
+      {
+        kind: "link",
+        icon: MONEY,
+        before: "Run the ",
+        linkText: "Stewardship Financial Assessment",
+        after: " for a personalized financial health score, debt strategy, and savings roadmap →",
+        href: "/stewardship",
+        external: false,
+      },
     ],
   },
   {
