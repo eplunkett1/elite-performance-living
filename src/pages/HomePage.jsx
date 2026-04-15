@@ -1027,6 +1027,16 @@ export default function ElitePerformanceSite() {
               </p>
               <button onClick={() => navigate("/workout")} style={s.ctaSecondary}>Build Your Plan →</button>
             </div>
+            <div style={s.toolCard}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>💰</div>
+              <h3 style={s.toolTitle}>Stewardship Financial Assessment</h3>
+              <p style={s.toolDesc}>
+                Get a personalized financial health score based on your income,
+                expenses, debt, and goals — plus practical next steps for
+                budgeting, debt payoff, and long-term savings.
+              </p>
+              <button onClick={() => navigate("/stewardship")} style={s.ctaSecondary}>Start Assessment →</button>
+            </div>
           </div>
         </div>
       </section>
