@@ -54,6 +54,7 @@ const PILLAR_RESOURCE_ROWS = [
   [
     { kind: "book", title: "Extreme Ownership", author: "Jocko Willink and Leif Babin" },
     { kind: "book", title: "Stewardship", author: "Peter Block" },
+    { kind: "tool", label: "Stewardship Financial Assessment", to: "/stewardship" },
   ],
   [
     { kind: "book", title: "The Magic of Thinking Big", author: "David J. Schwartz" },
