@@ -1037,6 +1037,12 @@ export default function ElitePerformanceSite() {
               </p>
               <button onClick={() => navigate("/stewardship")} style={s.ctaSecondary}>Start Assessment →</button>
             </div>
+            <div style={s.toolCard}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🕒</div>
+              <h3 style={s.toolTitle}>Power Nine Time Audit</h3>
+              <p style={s.toolDesc}>Get Amy's Stop/Start/Continue recommendations for your weekly schedule. Map your current time allocation and discover what to stop, start, or continue.</p>
+              <button onClick={() => navigate("/time-audit")} style={s.ctaSecondary}>Launch Time Audit →</button>
+            </div>
           </div>
         </div>
       </section>

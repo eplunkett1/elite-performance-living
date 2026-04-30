@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => {
   const apiKey = env.ANTHROPIC_API_KEY || "";
 
   return {
+    appType: "spa",
     plugins: [react()],
     server: {
       proxy: {
