@@ -1038,10 +1038,14 @@ export default function ElitePerformanceSite() {
               <button onClick={() => navigate("/stewardship")} style={s.ctaSecondary}>Start Assessment →</button>
             </div>
             <div style={s.toolCard}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>🕒</div>
-              <h3 style={s.toolTitle}>Power Nine Time Audit</h3>
-              <p style={s.toolDesc}>Get Amy's Stop/Start/Continue recommendations for your weekly schedule. Map your current time allocation and discover what to stop, start, or continue.</p>
-              <button onClick={() => navigate("/time-audit")} style={s.ctaSecondary}>Launch Time Audit →</button>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🧭</div>
+              <h3 style={s.toolTitle}>Vision of Elite</h3>
+              <p style={s.toolDesc}>
+                Your version of elite is yours alone. Define it.
+                {" "}
+                A guided assessment across the Power Nine pillars where you define what thriving looks like for you in this season of life. No benchmarks, no comparisons — just clarity, self-awareness, and your own standard.
+              </p>
+              <button onClick={() => navigate("/vision-of-elite")} style={s.ctaSecondary}>Launch Vision of Elite →</button>
             </div>
           </div>
         </div>

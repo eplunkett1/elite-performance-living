@@ -5,7 +5,7 @@ import AssessmentPage from "./pages/AssessmentPage";
 import WorkoutPage from "./pages/WorkoutPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import StewardshipPlanner from "./pages/StewardshipPlanner";
-import TimeAuditTool from "./components/TimeAuditTool";
+import EliteVisionAssessment from "./components/EliteVisionAssessment";
 
 export default function App() {
   return (
@@ -15,7 +15,8 @@ export default function App() {
       <Route path="/assessment" element={<AssessmentPage />} />
       <Route path="/workout" element={<WorkoutPage />} />
       <Route path="/stewardship" element={<StewardshipPlanner />} />
-      <Route path="/time-audit" element={<TimeAuditTool />} />
+      <Route path="/time-audit" element={<Navigate to="/vision-of-elite" replace />} />
+      <Route path="/vision-of-elite" element={<EliteVisionAssessment />} />
       <Route path="/resources" element={<ResourcesPage />} />
       <Route path="/coaching" element={<Navigate to={{ pathname: "/", hash: "#connect" }} replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
