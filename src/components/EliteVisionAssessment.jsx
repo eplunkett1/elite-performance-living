@@ -103,6 +103,13 @@ const STATUS_OPTIONS = [
   { value: 'thriving', label: 'Thriving', desc: 'This is where I live now.' },
 ];
 
+const TIME_OPTIONS = [
+  { value: 'almost-none', label: 'Almost none', desc: 'Barely any of my time and energy goes here.' },
+  { value: 'a-little', label: 'A little', desc: 'Some attention, but inconsistent.' },
+  { value: 'meaningful-share', label: 'A meaningful share', desc: 'Real, regular investment.' },
+  { value: 'a-lot', label: 'A lot', desc: 'A major focus right now.' },
+];
+
 // ============================================================================
 // STYLES — Editorial dark theme with bronze accent
 // ============================================================================
@@ -265,16 +272,11 @@ function WelcomeScreen({ onStart }) {
         Elite Performance · The Power Nine
       </div>
       <h1 className="eva-display eva-fade-in eva-fade-in-2" style={{ fontSize: 'clamp(48px, 7vw, 84px)', lineHeight: 1.05, margin: '0 0 32px 0' }}>
-        Your Vision<br />
-        <em style={{ color: 'var(--accent)' }}>of Elite</em>
+        The Elite<br />
+        <em style={{ color: 'var(--accent)' }}>Time Audit</em>
       </h1>
-      <p className="eva-fade-in eva-fade-in-3" style={{ fontSize: '18px', lineHeight: 1.7, color: 'var(--text-dim)', margin: '0 0 16px 0', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-        Everyone's version of elite is different.
-      </p>
       <p className="eva-fade-in eva-fade-in-3" style={{ fontSize: '16px', lineHeight: 1.8, color: 'var(--text-dim)', margin: '0 0 48px 0', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
-        This is not a test. There are no right answers, no benchmarks to hit, no comparisons to anyone else.
-        Across nine pillars, you'll define what thriving looks like <em>for you</em> — in this season of life,
-        with the goals you actually have, on the terms that fit your real life.
+        Everyone&apos;s version of elite is different. This is your honest audit — across nine pillars, you&apos;ll define what thriving looks like for you, look at where your time and energy are actually going, and see where you&apos;re aligned with your own standard versus where you&apos;re drifting. No benchmarks. No comparisons. Just clarity.
       </p>
       
       <div className="eva-divider eva-fade-in eva-fade-in-3" style={{ margin: '0 auto 48px auto', maxWidth: '200px' }} />
@@ -302,7 +304,7 @@ function WelcomeScreen({ onStart }) {
 }
 
 function PillarScreen({ pillar, answer, onAnswer, onNext, onBack, currentIndex, totalPillars }) {
-  const isComplete = answer && answer.importance && answer.vision && answer.vision.trim().length > 0 && answer.status;
+  const isComplete = answer && answer.importance && answer.vision && answer.vision.trim().length > 0 && answer.time && answer.status;
   const progress = ((currentIndex + 1) / totalPillars) * 100;
   
   return (
@@ -385,9 +387,30 @@ function PillarScreen({ pillar, answer, onAnswer, onNext, onBack, currentIndex, 
         />
       </div>
       
-      {/* Q3: Status */}
-      <div style={{ marginBottom: '48px' }}>
+      {/* Q3: Time & energy */}
+      <div style={{ marginBottom: '40px' }}>
         <div className="eva-eyebrow" style={{ marginBottom: '8px' }}>Question 03</div>
+        <h3 className="eva-display" style={{ fontSize: '24px', margin: '0 0 20px 0', fontWeight: 500 }}>
+          How much of your time and energy is currently going into this pillar?
+        </h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
+          {TIME_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              onClick={() => onAnswer({ ...answer, time: opt.value })}
+              className={`eva-option ${answer?.time === opt.value ? 'selected' : ''}`}
+              style={{ textAlign: 'center', padding: '20px 16px' }}
+            >
+              <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: '6px' }}>{opt.label}</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-dim)', lineHeight: 1.5 }}>{opt.desc}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      {/* Q4: Status */}
+      <div style={{ marginBottom: '48px' }}>
+        <div className="eva-eyebrow" style={{ marginBottom: '8px' }}>Question 04</div>
         <h3 className="eva-display" style={{ fontSize: '24px', margin: '0 0 20px 0', fontWeight: 500 }}>
           Where are you right now relative to that vision?
         </h3>
@@ -489,6 +512,7 @@ function VisionDocument({ synthesis, answers, onRestart, onDownload }) {
           {PILLARS.map(p => {
             const a = answers[p.id];
             const importanceLabel = IMPORTANCE_OPTIONS.find(o => o.value === a?.importance)?.label || '';
+            const timeLabel = TIME_OPTIONS.find(o => o.value === a?.time)?.label || '';
             const statusLabel = STATUS_OPTIONS.find(o => o.value === a?.status)?.label || '';
             return (
               <div key={p.id} style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '16px 18px' }}>
@@ -497,7 +521,7 @@ function VisionDocument({ synthesis, answers, onRestart, onDownload }) {
                   <span style={{ fontFamily: 'var(--serif)', fontSize: '17px', fontWeight: 500 }}>{p.name}</span>
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>
-                  {importanceLabel} · {statusLabel}
+                  {importanceLabel} · {timeLabel} · {statusLabel}
                 </div>
               </div>
             );
@@ -563,25 +587,32 @@ export default function EliteVisionAssessment() {
     const userInputSummary = PILLARS.map(p => {
       const a = answers[p.id];
       const imp = IMPORTANCE_OPTIONS.find(o => o.value === a?.importance)?.label || '';
+      const timeLabel = TIME_OPTIONS.find(o => o.value === a?.time)?.label || '';
       const stat = STATUS_OPTIONS.find(o => o.value === a?.status)?.label || '';
-      return `**${p.name}** (Importance: ${imp} | Current state: ${stat})\nVision: ${a?.vision || ''}`;
+      return `**${p.name}** (Importance: ${imp} | Time/Energy investment: ${timeLabel} | Current state: ${stat})\nVision: ${a?.vision || ''}`;
     }).join('\n\n');
     
     const prompt = `You are a coach writing on behalf of Elite Performance Group, a brand built on the philosophy that everyone's version of "elite" is their own — defined by self-awareness, intentional goal-setting, and accountability to one's own standard, not external benchmarks.
 
-The user has just completed the Vision of Elite assessment across the Power Nine pillars. Their answers below describe what thriving looks like for them in each pillar in this season of life, how important each pillar is right now, and where they are relative to their stated vision.
+The user has just completed the Elite Time Audit across the Power Nine pillars. For each pillar, they reported:
+- How important the pillar is to them in this season (Foundational, Important & Active, Steady State, or Conscious Low Priority)
+- What "thriving" looks like for them in their own words
+- How much of their time and energy is currently going into the pillar (Almost none, A little, A meaningful share, A lot)
+- Where they are right now relative to their stated vision (Behind, Building, On Track, Thriving)
 
 Your task: Write a personalized "Vision of Elite" document for this person. It should:
 
-1. Open with a 2-3 paragraph synthesis written in second person ("You..."), drawing from their actual answers, capturing the through-line of who they are trying to be in this season. Use their language and values. Do not invent goals they did not state. Be honest and a little philosophical — this is not a marketing doc.
+1. Open with a 2-3 paragraph synthesis written in second person ("You..."), drawing from their actual answers, capturing the through-line of who they are trying to be in this season. Use their language and values. Do not invent goals they did not state. Be honest and a little philosophical.
 
-2. Then a section titled "What This Season Is Asking of You" — identify the 2-3 highest-leverage pillars based on (a) those they marked as Foundational or Important & Active AND (b) where they marked themselves as Behind or Building. These are the pillars where their stated importance and current state are most out of alignment.
+2. Then a section titled "What This Season Is Asking of You" — identify the 2-3 highest-leverage pillars based on misalignment between stated importance, time investment, and current status. The strongest signals are pillars marked Foundational or Important & Active where the user is Behind or Building AND giving them Almost none or A little time. Speak directly to those specific gaps. Where time and importance disagree, name it.
 
-3. Then a section titled "What You Are Consciously Setting Aside" — name the pillars they marked as Steady State or Conscious Low Priority. Honor this. No judgment. The point is that conscious deprioritization is a sign of clarity, not failure.
+3. Then a section titled "Where Your Time Is Telling the Truth" — call out 1-2 pillars where time investment, importance, and status are aligned (whether high or intentionally low). This is where they're being honest with themselves. Acknowledge it.
 
-4. Close with a single paragraph tying back to the wheel metaphor: their wheel does not need to be perfectly even — it needs to be intentional, and it will adjust as life adjusts.
+4. Then a section titled "What You Are Consciously Setting Aside" — name the pillars marked Steady State or Conscious Low Priority. No judgment. Conscious deprioritization is clarity, not failure.
 
-Format the response as clean HTML using <p>, <h2>, and <strong> tags only. No markdown, no other tags. Use <h2> for section headers. Keep it to roughly 500-700 words total. Tone: grounded, direct, warm but not soft. Like a coach who actually listens.
+5. Close with a single paragraph tying back to the wheel metaphor: their wheel does not need to be perfectly even — it needs to be intentional, and it will adjust as life adjusts.
+
+Format the response as clean HTML using <p>, <h2>, and <strong> tags only. No markdown, no other tags. Use <h2> for section headers. Keep it to roughly 600-800 words total. Tone: grounded, direct, warm but not soft. Like a coach who actually listens.
 
 Here are the user's answers:
 
@@ -644,8 +675,9 @@ ${userInputSummary}`;
     const pillarDetails = PILLARS.map(p => {
       const a = answers[p.id];
       const imp = IMPORTANCE_OPTIONS.find(o => o.value === a?.importance)?.label || '';
+      const timeLabel = TIME_OPTIONS.find(o => o.value === a?.time)?.label || '';
       const stat = STATUS_OPTIONS.find(o => o.value === a?.status)?.label || '';
-      return `${p.number} — ${p.name.toUpperCase()}\nImportance: ${imp}\nCurrent State: ${stat}\nMy Vision: ${a?.vision || ''}\n`;
+      return `${p.number} — ${p.name.toUpperCase()}\nImportance: ${imp}\nTime & Energy Investment: ${timeLabel}\nCurrent State: ${stat}\nMy Vision: ${a?.vision || ''}\n`;
     }).join('\n---\n\n');
     
     const content = `MY VISION OF ELITE

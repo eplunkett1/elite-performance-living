@@ -1039,13 +1039,11 @@ export default function ElitePerformanceSite() {
             </div>
             <div style={s.toolCard}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>🧭</div>
-              <h3 style={s.toolTitle}>Vision of Elite</h3>
+              <h3 style={s.toolTitle}>Elite Time Audit</h3>
               <p style={s.toolDesc}>
-                Your version of elite is yours alone. Define it.
-                {" "}
-                A guided assessment across the Power Nine pillars where you define what thriving looks like for you in this season of life. No benchmarks, no comparisons — just clarity, self-awareness, and your own standard.
+                You&apos;ve seen your wheel. Now do the honest audit. Walk through the Power Nine pillars one by one — define what thriving looks like for you in this season, take an honest look at where your time and energy are actually going, and see where you&apos;re aligned versus where you&apos;re drifting. The output is your personal standard and a clear answer to what this season needs from you.
               </p>
-              <button onClick={() => navigate("/vision-of-elite")} style={s.ctaSecondary}>Launch Vision of Elite →</button>
+              <button onClick={() => navigate("/vision-of-elite")} style={s.ctaSecondary}>Launch Elite Time Audit →</button>
             </div>
           </div>
         </div>
